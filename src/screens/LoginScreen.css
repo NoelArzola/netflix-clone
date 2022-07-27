@@ -49,6 +49,8 @@
   z-index: 1;
   color: #fff;
   padding: 20px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .loginScreen__body h1 {
