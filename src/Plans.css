@@ -3,6 +3,11 @@
   justify-content: space-between;
   align-items: center;
   margin: 2.5rem 0;
+  opacity: 0.8;
+}
+
+.plan__container:hover {
+  opacity: 1;
 }
 
 .plan__description > p {
