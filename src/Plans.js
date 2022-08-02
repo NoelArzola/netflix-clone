@@ -76,10 +76,23 @@ function Plans() {
     });
   };
 
+  db.collection("customers")
+    .doc(`${user.uid}.subscriptions[0].current_period_end`)
+    .get()
+    .then((doc) => {
+      console.log(doc.data());
+    });
+
+  let isSubscribed = null,
+    renewalDate = null,
+    currentPlan = null;
+
   return (
     <div className="plans__wrapper">
-      <h3>Plans (Current Plan: {})</h3>
-      <p class="plan__renewal-date">Renew Date: {}</p>
+      <h3>Plans (Current Plan: {isSubscribed ? currentPlan : "None"})</h3>
+      <p className="plan__renewal-date">
+        Renew Date: {isSubscribed ? renewalDate : "N/A"}
+      </p>
       {Object.entries(products).map(([productId, productData]) => {
         const isCurrentPackage = productData.name
           ?.toLowerCase()
