@@ -79,7 +79,7 @@ function Plans() {
   return (
     <div className="plans__wrapper">
       <h3>Plans (Current Plan: {})</h3>
-      <p>Renew Date: {}</p>
+      <p class="plan__renewal-date">Renew Date: {}</p>
       {Object.entries(products).map(([productId, productData]) => {
         const isCurrentPackage = productData.name
           ?.toLowerCase()

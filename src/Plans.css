@@ -1,3 +1,6 @@
+.plans__wrapper {
+  margin-top: 1.5rem;
+}
 .plan__container {
   display: flex;
   justify-content: space-between;
@@ -8,6 +11,10 @@
 
 .plan__container:hover {
   opacity: 1;
+}
+
+.plan__renewal-date {
+  margin-top: 0.5rem;
 }
 
 .plan__description > p {
