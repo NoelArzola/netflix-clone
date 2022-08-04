@@ -10,6 +10,7 @@ function Plans() {
   const [products, setProducts] = useState([]);
   const user = useSelector(selectUser);
   const [subscription, setSubscription] = useState(null);
+  const [currentPlan, setCurrentPlan] = useState("None");
 
   useEffect(() => {
     db.collection("customers")
@@ -75,24 +76,28 @@ function Plans() {
       }
     });
   };
-
-  db.collection("customers")
-    .doc(`${user.uid}.subscriptions[0].current_period_end`)
-    .get()
-    .then((doc) => {
-      console.log(doc.data());
-    });
-
-  let isSubscribed = null,
-    renewalDate = null,
-    currentPlan = null;
+  useEffect(() => {
+    db.collection("customers")
+      .doc(`${user.uid}`)
+      .collection("subscriptions")
+      .where("status", "==", "active")
+      .onSnapshot(async (snapshot) => {
+        if (snapshot.empty) {
+          // Show products
+          console.log("empty");
+          return;
+        }
+        const subscription1 = snapshot.docs[0].data();
+        let roleData = await subscription1.role;
+        roleData = roleData[0].toUpperCase() + roleData.substring(1);
+        setCurrentPlan(roleData);
+      });
+  });
 
   return (
     <div className="plans__wrapper">
-      <h3>Plans (Current Plan: {isSubscribed ? currentPlan : "None"})</h3>
-      <p className="plan__renewal-date">
-        Renew Date: {isSubscribed ? renewalDate : "N/A"}
-      </p>
+      <h3>Plans (Current Plan: {currentPlan})</h3>
+      <p className="plan__renewal-date">Renew Date: {}</p>
       {Object.entries(products).map(([productId, productData]) => {
         const isCurrentPackage = productData.name
           ?.toLowerCase()
