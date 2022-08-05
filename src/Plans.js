@@ -11,6 +11,7 @@ function Plans() {
   const user = useSelector(selectUser);
   const [subscription, setSubscription] = useState(null);
   const [currentPlan, setCurrentPlan] = useState("None");
+  const [renewalDate, setRenewalDate] = useState("N/A");
 
   useEffect(() => {
     db.collection("customers")
@@ -76,6 +77,7 @@ function Plans() {
       }
     });
   };
+
   useEffect(() => {
     db.collection("customers")
       .doc(`${user.uid}`)
@@ -87,17 +89,23 @@ function Plans() {
           console.log("empty");
           return;
         }
-        const subscription1 = snapshot.docs[0].data();
-        let roleData = await subscription1.role;
-        roleData = roleData[0].toUpperCase() + roleData.substring(1);
-        setCurrentPlan(roleData);
+        const roleData = snapshot.docs[0].data();
+        let planName = await roleData.role;
+        planName = planName[0].toUpperCase() + planName.substring(1);
+        setCurrentPlan(planName);
+        const currentPeriodEnd = subscription.current_period_end;
+        if (currentPeriodEnd) {
+          let transformEpoch = new Date(currentPeriodEnd * 1000);
+          transformEpoch = transformEpoch.toLocaleDateString();
+          setRenewalDate(transformEpoch);
+        }
       });
   });
 
   return (
     <div className="plans__wrapper">
       <h3>Plans (Current Plan: {currentPlan})</h3>
-      <p className="plan__renewal-date">Renew Date: {}</p>
+      <p className="plan__renewal-date">Renew Date: {renewalDate}</p>
       {Object.entries(products).map(([productId, productData]) => {
         const isCurrentPackage = productData.name
           ?.toLowerCase()
