@@ -1,11 +1,12 @@
 import React, { useRef } from "react";
 import { auth } from "../firebase";
+import { useNavigate } from "react-router-dom";
 import "./SignUpScreen.css";
 
 function SignUpScreen({ getStartedEmailRef }) {
-  console.log(getStartedEmailRef.current);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
+  const history = useNavigate();
 
   const register = (e) => {
     e.preventDefault();
@@ -17,6 +18,7 @@ function SignUpScreen({ getStartedEmailRef }) {
       .then((authUser) => {
         console.log(authUser);
       })
+      .then(() => history("/profile", { replace: true }))
       .catch((error) => {
         alert(error.message);
       });
