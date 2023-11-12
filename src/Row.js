@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import axios from "./axios";
 import MoreInfo from "./screens/MoreInfo";
 
-function Row({ title, fetchUrl, isLargeRow = false }) {
+function Row({ title, fetchUrl, isLargeRow = false, lazyLoad = false }) {
   const [movies, setMovies] = useState([]);
   const [showMoreInfo, setShowMoreInfo] = useState(false);
   const [movieName, setMovieName] = useState("");
@@ -45,6 +45,7 @@ function Row({ title, fetchUrl, isLargeRow = false }) {
                   );
                   setShowMoreInfo(true);
                 }}
+                loading={lazyLoad ? "lazy" : ""}
               />
             )
         )}
