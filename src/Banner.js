@@ -3,8 +3,11 @@ import "./Banner.css";
 import axios from "./axios";
 import requests from "./Requests";
 
+import { useNavigate } from "react-router-dom";
+
 function Banner() {
   const [movie, setMovie] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -52,7 +55,19 @@ function Banner() {
             </svg>{" "}
             Play
           </button>
-          <button className="banner__button banner__button__my-list">
+          <button
+            className="banner__button banner__button__my-list"
+            onClick={() => {
+              navigate("/title", {
+                replace: true,
+                state: {
+                  movieName: movie.name,
+                  movieOverview: movie.overview,
+                  movieImage: `https://image.tmdb.org/t/p/original/${movie?.poster_path}`,
+                },
+              });
+            }}
+          >
             <svg
               width="24"
               height="24"
@@ -68,7 +83,7 @@ function Banner() {
                 fill="currentColor"
               ></path>
             </svg>{" "}
-            My List
+            More Info
           </button>
         </div>
         <h2 className="banner__description">
