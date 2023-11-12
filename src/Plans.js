@@ -107,7 +107,7 @@ function Plans() {
     <div className="plans__wrapper">
       <h3>Plans (Current Plan: {currentPlan})</h3>
       <p className="plan__renewal-date">Renew Date: {renewalDate}</p>
-      {currentPlan ? (
+      {!subscription ? (
         <p className="plan__card_info">
           <span className={"font-bold"}>
             On the next screen (Stripe Checkout) the test card to enter is:
