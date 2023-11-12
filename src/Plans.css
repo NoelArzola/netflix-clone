@@ -17,6 +17,15 @@
   margin-top: 0.5rem;
 }
 
+.plan__card_info {
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
 .plan__description > p {
   font-weight: 400;
   font-size: 0.875rem;
@@ -33,4 +42,29 @@
 
 .plan__button--disabled {
   background-color: gray;
+}
+
+.hidden {
+  display: none;
+}
+
+.block {
+  display: block;
+}
+
+.pointer-none {
+  cursor: default;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

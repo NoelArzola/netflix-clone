@@ -53,6 +53,10 @@
   border: none;
 }
 
+.profileScreen__signOut:hover {
+  background-color: darkred;
+}
+
 .profileScreen__plans > h3 {
   border-bottom: 1px solid #282c2d;
   padding: 0.75rem 0;
