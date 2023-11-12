@@ -1,0 +1,132 @@
+.moreInfo {
+  height: 100dvh;
+  color: white;
+  padding: 9rem 1.25rem 0 1.25rem;
+}
+
+.moreInfo h1 {
+  font-size: 3rem;
+}
+
+.moreInfo p {
+  background-color: rgba(0, 0, 0, 0.2);
+  margin-top: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 4rem;
+  padding: 0.25rem 0.25rem;
+}
+
+.moreInfo img {
+  display: none;
+}
+
+.moreInfo span {
+  font-weight: 700;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.moreInfo span:hover {
+  color: #e50914;
+  cursor: pointer;
+}
+
+.continueWatching {
+  color: black;
+  background-color: white;
+  padding: 1rem;
+  font-weight: bold;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0.375rem;
+  margin-bottom: 3rem;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.continueWatching:hover {
+  background-color: rgba(255, 255, 255, 0.75);
+  color: #e50914;
+}
+
+.continueWatching--large {
+  display: none;
+}
+
+.continueWatching__progressBar {
+  margin-left: 1rem;
+  height: 4px;
+  display: flex;
+  align-items: center;
+  width: 30%;
+  background-color: gray;
+}
+
+.continueWatching__progressBar__progress {
+  background-color: red;
+  width: 25%;
+  height: 4px;
+}
+
+.goBack {
+  background-color: rgba(0, 0, 0, 0.2);
+  width: fit-content;
+  padding: 0.25rem 1rem;
+}
+
+@media screen and (min-width: 768px) {
+  main {
+    background-image: none !important;
+  }
+  .moreInfo__wrapper {
+    display: flex;
+  }
+
+  .moreInfo img {
+    display: block;
+  }
+
+  .continueWatching {
+    margin-top: 1rem;
+  }
+
+  .moreInfo__text {
+    width: 75%;
+    margin-right: 2rem;
+  }
+
+  .continueWatching--small {
+    display: none;
+  }
+
+  .continueWatching--large {
+    display: flex;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .moreInfo__wrapper {
+    justify-content: center;
+  }
+  .moreInfo__text {
+    max-width: 540px;
+  }
+
+  .goBack {
+    margin-top: 300px;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .moreInfo__wrapper {
+    justify-content: center;
+  }
+  .moreInfo__text {
+    max-width: 540px;
+    margin-right: 9rem;
+  }
+}

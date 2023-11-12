@@ -2,14 +2,13 @@ import "./Row.css";
 import React, { useEffect, useState } from "react";
 import axios from "./axios";
 import MoreInfo from "./screens/MoreInfo";
+import { useNavigate } from "react-router-dom";
 
 function Row({ title, fetchUrl, isLargeRow = false, lazyLoad = false }) {
   const [movies, setMovies] = useState([]);
   const [showMoreInfo, setShowMoreInfo] = useState(false);
-  const [movieName, setMovieName] = useState("");
-  const [movieOverview, setMovieOverview] = useState("");
-  const [movieImage, setMovieImage] = useState("");
   const base_url = "https://image.tmdb.org/t/p/original/";
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -36,28 +35,23 @@ function Row({ title, fetchUrl, isLargeRow = false, lazyLoad = false }) {
                 alt={movie.name}
                 key={movie.id}
                 onClick={() => {
-                  setMovieOverview(movie.overview);
-                  setMovieName(movie.name);
-                  setMovieImage(
-                    `${base_url}${
-                      isLargeRow ? movie.poster_path : movie.backdrop_path
-                    }`
-                  );
-                  setShowMoreInfo(true);
+                  navigate("/title", {
+                    replace: true,
+                    state: {
+                      movieName: movie.name,
+                      movieOverview: movie.overview,
+                      movieImage: `${base_url}${
+                        isLargeRow ? movie.poster_path : movie.backdrop_path
+                      }`,
+                    },
+                  });
                 }}
                 loading={lazyLoad ? "lazy" : ""}
               />
             )
         )}
       </div>
-      {showMoreInfo && (
-        <MoreInfo
-          movieName={movieName}
-          movieOverview={movieOverview}
-          movieImage={movieImage}
-          setShowMoreInfo={setShowMoreInfo}
-        />
-      )}
+      {showMoreInfo && <MoreInfo />}
     </div>
   );
 }
