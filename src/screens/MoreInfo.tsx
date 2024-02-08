@@ -19,6 +19,9 @@ export default function MoreInfo() {
   const movieOverview = movie?.movieOverview;
   const movieImage = movie?.movieImage;
 
+  console.log("here");
+  console.log(movie);
+
   return (
     <main
       style={{
@@ -49,11 +52,7 @@ export default function MoreInfo() {
               </div>
             </div>
           </div>
-          <img
-            src={movieImage}
-            alt=""
-            style={{ height: "400px", width: "270px" }}
-          />
+          <img src={movieImage} alt="" style={{ height: "400px" }} />
         </div>
 
         <div className="continueWatching continueWatching--small">

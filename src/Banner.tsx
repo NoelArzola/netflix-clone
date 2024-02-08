@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 
 interface Movie {
   backdrop_path: string;
-  title: string;
-  name: string;
-  original_name: string;
+  title?: string;
+  name?: string;
+  original_title?: string;
   overview: string | undefined;
   poster_path: string;
 }
@@ -44,7 +44,7 @@ function Banner() {
     >
       <div className="banner__contents">
         <h1 className="banner__title">
-          {movie?.title || movie?.name || movie?.original_name}
+          {movie?.title ?? movie?.name ?? movie?.original_title}
         </h1>
         <div className="banner__buttons">
           <button className="banner__button banner__button__play">
@@ -69,7 +69,8 @@ function Banner() {
               navigate("/title", {
                 replace: true,
                 state: {
-                  movieName: movie?.name,
+                  movieName:
+                    movie?.title ?? movie?.name ?? movie?.original_title,
                   movieOverview: movie?.overview,
                   movieImage: `https://image.tmdb.org/t/p/original/${movie?.poster_path}`,
                 },
