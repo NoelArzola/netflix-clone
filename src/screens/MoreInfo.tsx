@@ -19,9 +19,6 @@ export default function MoreInfo() {
   const movieOverview = movie?.movieOverview;
   const movieImage = movie?.movieImage;
 
-  console.log("here");
-  console.log(movie);
-
   return (
     <main
       style={{
