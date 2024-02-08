@@ -3,13 +3,20 @@ import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import "./SignUpScreen.css";
 
-function SignUpScreen({ getStartedEmailRef }) {
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+interface SignUpScreenProps {
+  getStartedEmailRef: React.RefObject<HTMLInputElement>;
+}
+
+function SignUpScreen({ getStartedEmailRef }: SignUpScreenProps) {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
   const history = useNavigate();
 
-  const register = (e) => {
+  const register = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
+    if (!emailRef.current || !passwordRef.current) return;
+
     auth
       .createUserWithEmailAndPassword(
         emailRef.current.value,
@@ -24,8 +31,10 @@ function SignUpScreen({ getStartedEmailRef }) {
       });
   };
 
-  const signIn = (e) => {
+  const signIn = (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    if (!emailRef.current || !passwordRef.current) return;
+
     auth
       .signInWithEmailAndPassword(
         emailRef.current.value,
@@ -46,7 +55,7 @@ function SignUpScreen({ getStartedEmailRef }) {
           type="email"
           placeholder="Email"
           defaultValue={
-            getStartedEmailRef.current.value
+            getStartedEmailRef?.current?.value
               ? getStartedEmailRef.current.value
               : ""
           }
@@ -57,6 +66,7 @@ function SignUpScreen({ getStartedEmailRef }) {
         </button>
         <h4>
           <span>New to Netflix? Fill out the form above then</span>{" "}
+          {/* @ts-ignore*/}
           <span className="signUpScreen__link" onClick={register}>
             click here to Sign Up Now.
           </span>{" "}

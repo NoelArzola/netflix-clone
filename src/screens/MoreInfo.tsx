@@ -3,13 +3,21 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./MoreInfo.css";
 import Nav from "../Nav";
 
+interface Movie {
+  movieName: string;
+  movieOverview: string;
+  movieImage: string;
+}
+
 export default function MoreInfo() {
+  window.scrollTo(0, 0);
   const location = useLocation();
   const history = useNavigate();
-  const movie = location.state;
-  const movieName = movie.movieName;
-  const movieOverview = movie.movieOverview;
-  const movieImage = movie.movieImage;
+
+  const movie: Movie = location.state as Movie;
+  const movieName = movie?.movieName;
+  const movieOverview = movie?.movieOverview;
+  const movieImage = movie?.movieImage;
 
   return (
     <main

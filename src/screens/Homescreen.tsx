@@ -19,32 +19,32 @@ function Homescreen() {
       <Row
         title="Top Rated"
         fetchUrl={requests.fetchTopRated}
-        lazyLoad={"true"}
+        lazyLoad={true}
       />
       <Row
         title="Action Movies"
         fetchUrl={requests.fetchActionMovies}
-        lazyLoad={"true"}
+        lazyLoad={true}
       />
       <Row
         title="Comedy Movies"
         fetchUrl={requests.fetchComedyMovies}
-        lazyLoad={"true"}
+        lazyLoad={true}
       />
       <Row
         title="Horror Movies"
         fetchUrl={requests.fetchHorrorMovies}
-        lazyLoad={"true"}
+        lazyLoad={true}
       />
       <Row
         title="Romance Movies"
         fetchUrl={requests.fetchRomanceMovies}
-        lazyLoad={"true"}
+        lazyLoad={true}
       />
       <Row
         title="Documentaries"
         fetchUrl={requests.fetchDocumentaries}
-        lazyLoad={"true"}
+        lazyLoad={true}
       />
     </div>
   );

@@ -37,7 +37,7 @@ function App() {
           <Routes>
             <Route path="/title" element={<MoreInfo />} />
             <Route path="/profile" element={<Profile />} />
-            <Route exact path="/" element={<Homescreen />} />
+            <Route path="/" element={<Homescreen />} />
           </Routes>
         )}
       </Router>

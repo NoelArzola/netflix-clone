@@ -1,12 +1,30 @@
 import "./Row.css";
 import React, { useEffect, useState } from "react";
 import axios from "./axios";
-import MoreInfo from "./screens/MoreInfo";
 import { useNavigate } from "react-router-dom";
 
-function Row({ title, fetchUrl, isLargeRow = false, lazyLoad = false }) {
-  const [movies, setMovies] = useState([]);
-  const [showMoreInfo, setShowMoreInfo] = useState(false);
+interface Movie {
+  id: number;
+  name: string;
+  poster_path: string;
+  backdrop_path: string;
+  overview: string;
+}
+
+interface RowProps {
+  title: string;
+  fetchUrl: string;
+  isLargeRow?: boolean;
+  lazyLoad?: boolean;
+}
+
+function Row({
+  title,
+  fetchUrl,
+  isLargeRow = false,
+  lazyLoad = false,
+}: RowProps) {
+  const [movies, setMovies] = useState<Movie[]>([]);
   const base_url = "https://image.tmdb.org/t/p/original/";
   const navigate = useNavigate();
 
@@ -46,12 +64,11 @@ function Row({ title, fetchUrl, isLargeRow = false, lazyLoad = false }) {
                     },
                   });
                 }}
-                loading={lazyLoad ? "lazy" : ""}
+                loading={lazyLoad ? "lazy" : undefined}
               />
             )
         )}
       </div>
-      {showMoreInfo && <MoreInfo />}
     </div>
   );
 }
