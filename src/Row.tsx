@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 interface Movie {
   id: number;
-  name: string;
+  title?: string;
+  name?: string;
+  original_title?: string;
   poster_path: string;
   backdrop_path: string;
   overview: string;
@@ -32,6 +34,7 @@ function Row({
     async function fetchData() {
       const request = await axios.get(fetchUrl);
       setMovies(request.data.results);
+      console.log(request.data.results);
       return request;
     }
     fetchData();
@@ -50,13 +53,14 @@ function Row({
                 src={`${base_url}${
                   isLargeRow ? movie.poster_path : movie.backdrop_path
                 }`}
-                alt={movie.name}
+                alt={movie.title}
                 key={movie.id}
                 onClick={() => {
                   navigate("/title", {
                     replace: true,
                     state: {
-                      movieName: movie.name,
+                      movieName:
+                        movie?.title ?? movie?.name ?? movie?.original_title,
                       movieOverview: movie.overview,
                       movieImage: `${base_url}${
                         isLargeRow ? movie.poster_path : movie.backdrop_path
