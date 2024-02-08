@@ -5,14 +5,29 @@ import { useSelector } from "react-redux";
 import { selectUser } from "./features/userSlice";
 import { loadStripe } from "@stripe/stripe-js";
 
+interface Product {
+  name: string;
+  description: string;
+  prices: {
+    priceId: string;
+    priceData: any; // Define type according to your data structure
+  };
+}
+
+interface Subscription {
+  role: string;
+  current_period_end: number;
+  current_period_start: number;
+}
+
 function Plans() {
   //TODO: Cancel button, Restrict Access, Populate renewal date and current plan dynamically
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState<Record<string, Product>>({});
   const user = useSelector(selectUser);
-  const [subscription, setSubscription] = useState(null);
-  const [currentPlan, setCurrentPlan] = useState("None");
-  const [renewalDate, setRenewalDate] = useState("N/A");
-  const [showLoading, setShowloading] = useState(false);
+  const [subscription, setSubscription] = useState<Subscription | null>(null);
+  const [currentPlan, setCurrentPlan] = useState<string>("None");
+  const [renewalDate, setRenewalDate] = useState<string>("N/A");
+  const [showLoading, setShowloading] = useState<boolean>(false);
 
   useEffect(() => {
     db.collection("customers")
@@ -63,7 +78,7 @@ function Plans() {
       });
 
     docRef.onSnapshot(async (snap) => {
-      const { error, sessionId } = snap.data();
+      const { error, sessionId }: any = snap.data();
 
       if (error) {
         alert(`An error occured: ${error.message}. Please try again`);
@@ -74,7 +89,7 @@ function Plans() {
           "pk_test_3e0ixkUM0GkeLQ44AxWTXESQ00jsrkAhFw"
         );
 
-        stripe.redirectToCheckout({ sessionId });
+        stripe?.redirectToCheckout({ sessionId });
       }
     });
   };
@@ -94,11 +109,11 @@ function Plans() {
         let planName = await roleData.role;
         planName = planName[0].toUpperCase() + planName.substring(1);
         setCurrentPlan(planName);
-        const currentPeriodEnd = subscription.current_period_end;
+        const currentPeriodEnd = subscription?.current_period_end;
         if (currentPeriodEnd) {
           let transformEpoch = new Date(currentPeriodEnd * 1000);
-          transformEpoch = transformEpoch.toLocaleDateString();
-          setRenewalDate(transformEpoch);
+          const renewalDateString: string = transformEpoch.toLocaleDateString();
+          setRenewalDate(renewalDateString);
         }
       });
   });
@@ -119,9 +134,10 @@ function Plans() {
         ""
       )}
       {Object.entries(products).map(([productId, productData]) => {
-        const isCurrentPackage = productData.name
-          ?.toLowerCase()
-          .includes(subscription?.role);
+        const isCurrentPackage =
+          subscription && subscription.role
+            ? productData.name?.toLowerCase().includes(subscription?.role)
+            : false;
         return (
           <div className="plan__container" key={productId}>
             <div className="plan__description">

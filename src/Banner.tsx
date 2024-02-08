@@ -2,11 +2,19 @@ import React, { useEffect, useState } from "react";
 import "./Banner.css";
 import axios from "./axios";
 import requests from "./Requests";
-
 import { useNavigate } from "react-router-dom";
 
+interface Movie {
+  backdrop_path: string;
+  title: string;
+  name: string;
+  original_name: string;
+  overview: string | undefined;
+  poster_path: string;
+}
+
 function Banner() {
-  const [movie, setMovie] = useState([]);
+  const [movie, setMovie] = useState<Movie | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,7 +30,7 @@ function Banner() {
     fetchData();
   }, []);
 
-  function truncate(string, n) {
+  function truncate(string: string, n: number) {
     return string?.length > n ? string.substr(0, n - 1) + "..." : string;
   }
   return (
@@ -61,8 +69,8 @@ function Banner() {
               navigate("/title", {
                 replace: true,
                 state: {
-                  movieName: movie.name,
-                  movieOverview: movie.overview,
+                  movieName: movie?.name,
+                  movieOverview: movie?.overview,
                   movieImage: `https://image.tmdb.org/t/p/original/${movie?.poster_path}`,
                 },
               });
@@ -87,7 +95,9 @@ function Banner() {
           </button>
         </div>
         <h2 className="banner__description">
-          {truncate(movie?.overview, 150)}
+          {movie?.overview
+            ? truncate(movie?.overview, 150)
+            : "No description available"}
         </h2>
       </div>
       <div className="banner--fadeBottom"></div>
